@@ -1,6 +1,6 @@
-import Process from '../interfaces/processInterface';
+import Process from '../Interfaces/processInterface';
 
-let process: Array<Process> = [
+let processes: Array<Process> = [
   {
     id: 1,
     active: true,
@@ -92,3 +92,5 @@ let process: Array<Process> = [
     clientId: 2,
   },
 ];
+
+export default processes;

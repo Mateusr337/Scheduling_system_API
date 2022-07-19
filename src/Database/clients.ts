@@ -1,4 +1,4 @@
-import Client from '../interfaces/clientInterface';
+import Client from '../Interfaces/clientInterface';
 
 let clients: Array<Client> = [
   {
