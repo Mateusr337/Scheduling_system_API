@@ -24,7 +24,17 @@ function averageValues(req: Request, res: Response) {
   res.send({ average }).status(200);
 }
 
+function find(req: Request, res: Response) {
+  const minValue = parseInt(req.query.minValue as string);
+  const maxValue = parseInt(req.query.maxValue as string);
+
+  const processes = processService.find(minValue, maxValue);
+
+  res.send(processes);
+}
+
 export default {
   sumValues,
   averageValues,
+  find,
 };

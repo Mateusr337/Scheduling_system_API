@@ -30,7 +30,21 @@ function averageValues(
   );
 }
 
+function find(minValue: number, maxValue: number) {
+  let processes = processRepository.findAll();
+
+  console.log(minValue);
+
+  if (minValue)
+    processes = processes.filter((process) => process.value > minValue);
+  if (maxValue)
+    processes = processes.filter((process) => process.value < maxValue);
+
+  return processes;
+}
+
 export default {
   sumValues,
   averageValues,
+  find,
 };
