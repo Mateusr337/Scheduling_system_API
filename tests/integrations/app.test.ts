@@ -1,5 +1,6 @@
 import supertest from 'supertest';
 import app from '../../src/app';
+import clients from '../../src/Database/clients';
 import processes from '../../src/Database/processes';
 
 const agent = supertest(app);
@@ -24,7 +25,7 @@ describe('test cases', () => {
   it('should answer with value processes bigger than 100.000,00', async () => {
     const min = 10000001;
     const response = await agent.get(`/processes?minValue=${min}`);
-    expect(response.body.length).toEqual(2);
+    expect(response.body).toHaveLength(2);
   });
 
   it('should answer with processes of date SET 2007', async () => {
@@ -35,7 +36,27 @@ describe('test cases', () => {
       `/processes?minDate=${minDate}&maxDate=${maxDate}`
     );
 
-    expect(response.body.length).toEqual(1);
+    expect(response.body).toHaveLength(1);
     expect(response.body[0].number).toEqual('00010TRABAM');
+  });
+
+  it("should answer with processes of client 'Empresa A' in same state", async () => {
+    const client = clients.find(
+      (client) => client.name === 'Empresa A'.toLowerCase()
+    );
+
+    const processesToValid = processes.filter(
+      (process) =>
+        process.number === '00004CIVELRJ' || process.number === '00001CIVELRJ'
+    );
+
+    const response = await agent.get(
+      `/processes?state=${client?.state}&clientName=${client?.name}`
+    );
+
+    console.log(response.body);
+
+    expect(response.body).toHaveLength(2);
+    expect(response.body).toEqual(processesToValid);
   });
 });

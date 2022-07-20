@@ -29,8 +29,17 @@ function find(req: Request, res: Response) {
   const maxValue = parseInt(req.query.maxValue as string);
   const maxDate = req.query.maxDate as string;
   const minDate = req.query.minDate as string;
+  const state = req.query.state as string;
+  const clientName = req.query.clientName as string;
 
-  const processes = processService.find(minValue, maxValue, minDate, maxDate);
+  const processes = processService.find(
+    minValue,
+    maxValue,
+    minDate,
+    maxDate,
+    state,
+    clientName
+  );
 
   res.send(processes);
 }
