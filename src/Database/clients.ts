@@ -1,6 +1,6 @@
 import Client from '../Interfaces/clientInterface';
 
-let clients: Array<Client> = [
+const clients: Array<Client> = [
   {
     id: 1,
     name: 'empresa a',

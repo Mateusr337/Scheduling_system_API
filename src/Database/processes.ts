@@ -1,6 +1,6 @@
 import Process from '../Interfaces/processInterface';
 
-let processes: Array<Process> = [
+const processes: Array<Process> = [
   {
     id: 1,
     active: true,

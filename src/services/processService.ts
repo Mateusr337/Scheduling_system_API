@@ -1,3 +1,4 @@
+import Process from '../Interfaces/processInterface';
 import processRepository from '../repositories/processRepository';
 import applyProcessesFilters from '../utils/applyProcessesFilter';
 
@@ -46,8 +47,13 @@ function find(
   return processes;
 }
 
+function create(process: Process) {
+  return processRepository.create(process);
+}
+
 export default {
   sumValues,
   averageValues,
   find,
+  create,
 };
