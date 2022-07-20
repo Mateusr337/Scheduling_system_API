@@ -1,4 +1,5 @@
 import notFoundError from '../errors/notFoundError';
+import Process from '../Interfaces/processInterface';
 import processRepository from '../repositories/processRepository';
 import clientService from './clientService';
 
@@ -30,15 +31,32 @@ function averageValues(
   );
 }
 
-function find(minValue: number, maxValue: number) {
+function find(
+  minValue: number,
+  maxValue: number,
+  minDate: string,
+  maxDate: string
+) {
   let processes = processRepository.findAll();
+  processes = applyFilters(processes, minValue, maxValue, minDate, maxDate);
+  return processes;
+}
 
-  console.log(minValue);
-
+function applyFilters(
+  processes: Array<Process>,
+  minValue: number,
+  maxValue: number,
+  minDate: string,
+  maxDate: string
+) {
   if (minValue)
-    processes = processes.filter((process) => process.value > minValue);
+    processes = processes.filter((process) => process.value >= minValue);
   if (maxValue)
-    processes = processes.filter((process) => process.value < maxValue);
+    processes = processes.filter((process) => process.value <= maxValue);
+  if (minDate)
+    processes = processes.filter((process) => process.initialDate >= minDate);
+  if (maxDate)
+    processes = processes.filter((process) => process.initialDate >= maxDate);
 
   return processes;
 }

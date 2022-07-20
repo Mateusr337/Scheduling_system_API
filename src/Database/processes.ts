@@ -7,7 +7,7 @@ let processes: Array<Process> = [
     number: '00001CIVELRJ',
     state: 'RJ',
     value: 20000000,
-    initialDate: '10-10-2007',
+    initialDate: '2007-10-10',
     clientId: 1,
   },
   {
@@ -16,7 +16,7 @@ let processes: Array<Process> = [
     number: '00002CIVELSP',
     state: 'SP',
     value: 10000000,
-    initialDate: '20-10-2007',
+    initialDate: '2007-10-20',
     clientId: 1,
   },
   {
@@ -25,7 +25,7 @@ let processes: Array<Process> = [
     number: '00003TRABMG',
     state: 'MG',
     value: 1000000,
-    initialDate: '30-10-2007',
+    initialDate: '2007-10-30',
     clientId: 1,
   },
   {
@@ -34,7 +34,7 @@ let processes: Array<Process> = [
     number: '00003CIVELRJ',
     state: 'RJ',
     value: 2000000,
-    initialDate: '10-11-2007',
+    initialDate: '2007-11-10',
     clientId: 1,
   },
   {
@@ -43,7 +43,7 @@ let processes: Array<Process> = [
     number: '00005CIVELSP',
     state: 'SP',
     value: 3500000,
-    initialDate: '15-10-2007',
+    initialDate: '2007-10-15',
     clientId: 1,
   },
   {
@@ -52,7 +52,7 @@ let processes: Array<Process> = [
     number: '00006CIVELRJ',
     state: 'RJ',
     value: 2000000,
-    initialDate: '1-5-2007',
+    initialDate: '2007-5-1',
     clientId: 2,
   },
   {
@@ -61,7 +61,7 @@ let processes: Array<Process> = [
     number: '00007CIVELRJ',
     state: 'RJ',
     value: 70000000,
-    initialDate: '2-6-2007',
+    initialDate: '2007-6-2',
     clientId: 2,
   },
   {
@@ -70,7 +70,7 @@ let processes: Array<Process> = [
     number: '00008CIVELSP',
     state: 'SP',
     value: 50000,
-    initialDate: '3-7-2007',
+    initialDate: '2007-7-3',
     clientId: 2,
   },
   {
@@ -79,7 +79,7 @@ let processes: Array<Process> = [
     number: '00009CIVELSP',
     state: 'SP',
     value: 3200000,
-    initialDate: '4-8-2007',
+    initialDate: '2007-8-4',
     clientId: 2,
   },
   {
@@ -88,7 +88,7 @@ let processes: Array<Process> = [
     number: '00010TRABAM',
     state: 'AM',
     value: 100000,
-    initialDate: '5-9-2007',
+    initialDate: '2007-9-5',
     clientId: 2,
   },
 ];

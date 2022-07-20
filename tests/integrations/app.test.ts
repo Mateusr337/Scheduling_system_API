@@ -22,10 +22,20 @@ describe('test cases', () => {
   });
 
   it('should answer with value processes bigger than 100.000,00', async () => {
-    const min = 10000000;
-
+    const min = 10000001;
     const response = await agent.get(`/processes?minValue=${min}`);
-
     expect(response.body.length).toEqual(2);
+  });
+
+  it('should answer with processes of date SET 2007', async () => {
+    const minDate = '2007-9-1';
+    const maxDate = '2007-9-31';
+
+    const response = await agent.get(
+      `/processes?minDate=${minDate}&maxDate=${maxDate}`
+    );
+
+    expect(response.body.length).toEqual(1);
+    expect(response.body[0].number).toEqual('00010TRABAM');
   });
 });

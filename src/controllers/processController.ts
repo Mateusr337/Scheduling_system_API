@@ -27,8 +27,10 @@ function averageValues(req: Request, res: Response) {
 function find(req: Request, res: Response) {
   const minValue = parseInt(req.query.minValue as string);
   const maxValue = parseInt(req.query.maxValue as string);
+  const maxDate = req.query.maxDate as string;
+  const minDate = req.query.minDate as string;
 
-  const processes = processService.find(minValue, maxValue);
+  const processes = processService.find(minValue, maxValue, minDate, maxDate);
 
   res.send(processes);
 }
