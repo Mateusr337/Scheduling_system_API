@@ -1,20 +1,36 @@
-import processes from '../Database/processes';
-import Process from '../Interfaces/processInterface';
+import notFoundError from '../errors/notFoundError';
 import processRepository from '../repositories/processRepository';
+import clientService from './clientService';
 
-function sumAllValues(active: string) {
-  let processes: Array<Process> = [];
+function sumValues(active: boolean | undefined) {
+  let processes = processRepository.findAll();
 
-  if (active !== undefined) processes = processRepository.findByActive(active);
-  if (active === undefined) processes = processRepository.findAll();
+  if (active !== undefined)
+    processes = processes.filter((process) => process.active === active);
 
   return processes.reduce((sum, process) => (sum += process.value), 0);
 }
 
-function averageByStateAndClient(state: string, client: string) {
-  const processes = processRepository.findAll();
+function averageValues(
+  state: string | undefined,
+  clientName: string | undefined
+) {
+  let processes = processRepository.findAll();
+
+  if (state) processes = processes.filter((process) => process.state === state);
+
+  if (clientName) {
+    const client = clientService.findByName(clientName);
+    processes = processes.filter((process) => process.clientId === client.id);
+  }
+
+  return (
+    processes.reduce((sum, process) => (sum += process.value), 0) /
+    processes.length
+  );
 }
 
 export default {
-  sumAllValues,
+  sumValues,
+  averageValues,
 };
