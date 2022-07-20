@@ -59,4 +59,36 @@ describe('test cases', () => {
     expect(response.body).toHaveLength(2);
     expect(response.body).toEqual(processesToValid);
   });
+
+  it("should answer with processes of client 'Empresa B' in same state", async () => {
+    const client = clients.find(
+      (client) => client.name === 'Empresa B'.toLowerCase()
+    );
+
+    const processesToValid = processes.filter(
+      (process) =>
+        process.number === '00008CIVELSP' || process.number === '00009CIVELSP'
+    );
+
+    const response = await agent.get(
+      `/processes?state=${client?.state}&clientName=${client?.name}`
+    );
+
+    console.log(response.body);
+
+    expect(response.body).toHaveLength(2);
+    expect(response.body).toEqual(processesToValid);
+  });
+
+  it('should answer with processes with TRAB in the number', async () => {
+    const partialNumber = 'TRAB';
+    const processesToValid = processes.filter((process) =>
+      process.number.includes(partialNumber)
+    );
+
+    const response = await agent.get(`/processes?number=${partialNumber}`);
+
+    expect(response.body).toHaveLength(2);
+    expect(response.body).toEqual(processesToValid);
+  });
 });

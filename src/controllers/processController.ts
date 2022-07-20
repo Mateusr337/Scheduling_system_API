@@ -31,6 +31,7 @@ function find(req: Request, res: Response) {
   const minDate = req.query.minDate as string;
   const state = req.query.state as string;
   const clientName = req.query.clientName as string;
+  const number = req.query.number as string;
 
   const processes = processService.find(
     minValue,
@@ -38,7 +39,8 @@ function find(req: Request, res: Response) {
     minDate,
     maxDate,
     state,
-    clientName
+    clientName,
+    number
   );
 
   res.send(processes);

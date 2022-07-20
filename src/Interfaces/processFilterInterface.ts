@@ -9,4 +9,5 @@ export default interface ProcessesFilter {
   clientName?: string;
   state?: string;
   active?: boolean;
+  number?: string;
 }
