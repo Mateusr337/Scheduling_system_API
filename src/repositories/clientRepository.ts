@@ -1,5 +1,5 @@
 import clients from '../Database/clients';
-import notFoundError from '../errors/notFoundError';
+import Client from '../Interfaces/clientInterface';
 
 function findAll() {
   return clients;
@@ -9,15 +9,13 @@ function findByName(clientName: string) {
   return clients.find((client) => client.name === clientName);
 }
 
-function findByNameOrThrow(clientName: string) {
-  const client = findByName(clientName);
-  if (!client) throw notFoundError('client');
-
-  return client;
+function create(client: Client) {
+  clients.push(client);
+  return clients;
 }
 
 export default {
   findAll,
   findByName,
-  findByNameOrThrow,
+  create,
 };

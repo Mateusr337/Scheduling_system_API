@@ -1,10 +1,10 @@
 import processesDatabase from '../Database/processes';
 import ProcessInsertData from '../Interfaces/processInsertDataInterface';
 import ProcessType from '../Interfaces/processTypeInterface';
-import clientRepository from '../repositories/clientRepository';
 import processRepository from '../repositories/processRepository';
 import applyProcessesFilters from '../utils/applyProcessesFilter';
 import getNewId from '../utils/getNewId';
+import clientService from './clientService';
 
 function sumValues(active: boolean | undefined) {
   let processes = processRepository.findAll();
@@ -53,7 +53,7 @@ function find(
 
 function create(process: ProcessInsertData) {
   const newId = getNewId(processesDatabase);
-  const client = clientRepository.findByNameOrThrow(process.clientName);
+  const client = clientService.findByNameOrThrow(process.clientName);
   const number = createNumber(process.type, process.state);
 
   return processRepository.create({

@@ -27,7 +27,7 @@ export default function applyProcessesFilters({
   if (state) processes = processes.filter((process) => process.state === state);
 
   if (clientName) {
-    const client = clientService.findByName(clientName);
+    const client = clientService.findByNameOrThrow(clientName);
     processes = processes.filter((process) => process.clientId === client.id);
   }
 
