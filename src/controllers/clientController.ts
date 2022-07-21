@@ -4,12 +4,12 @@ import clientService from '../services/clientService';
 
 function find(req: Request, res: Response) {
   const clients = clientService.find();
-  res.send(clients).status(200);
+  res.status(200).send(clients);
 }
 
 function create(req: Request, res: Response) {
   const clients = clientService.create(req.body as ClientInsertData);
-  res.send(clients).status(200);
+  res.status(201).send(clients);
 }
 
 export default {

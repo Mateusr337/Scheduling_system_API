@@ -53,7 +53,7 @@ function find(
 
 function create(process: ProcessInsertData) {
   const newId = getNewId(processesDatabase);
-  const client = clientService.findByNameOrThrow(process.clientName);
+  const client = clientService.findByIdOrThrow(process.clientId);
   const number = createNumber(process.type, process.state);
 
   return processRepository.create({

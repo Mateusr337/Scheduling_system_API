@@ -11,7 +11,7 @@ function sumValues(req: Request, res: Response) {
 
   const sum = processService.sumValues(activeFilter);
 
-  res.send({ sum }).status(200);
+  res.status(200).send({ sum });
 }
 
 function averageValues(req: Request, res: Response) {
@@ -22,7 +22,7 @@ function averageValues(req: Request, res: Response) {
     clientName as string | undefined
   );
 
-  res.send({ average }).status(200);
+  res.status(200).send({ average });
 }
 
 function find(req: Request, res: Response) {
@@ -50,7 +50,8 @@ function find(req: Request, res: Response) {
 function create(req: Request, res: Response) {
   const process = req.body as ProcessInsertData;
   const processes = processService.create(process);
-  res.send(processes);
+
+  res.status(201).send(processes);
 }
 
 export default {

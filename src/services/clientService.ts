@@ -19,6 +19,12 @@ function findByNameOrThrow(clientName: string) {
 function find() {
   return clientRepository.findAll();
 }
+function findByIdOrThrow(clientId: number) {
+  const client = clientRepository.findById(clientId);
+  if (!client) throw notFoundError('client');
+
+  return client;
+}
 
 function create(clientData: ClientInsertData) {
   const newId = getNewId(clientsDatabase);
@@ -39,4 +45,5 @@ export default {
   findByNameOrThrow,
   find,
   create,
+  findByIdOrThrow,
 };

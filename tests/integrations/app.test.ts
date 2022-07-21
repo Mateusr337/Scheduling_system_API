@@ -3,6 +3,7 @@ import app from '../../src/app';
 import clientsDatabase from '../../src/Database/clients';
 import processesDatabase from '../../src/Database/processes';
 import clientFactory from '../factories/clientFactory';
+import processesFactory from '../factories/processesFactory';
 
 const agent = supertest(app);
 
@@ -99,23 +100,43 @@ describe('complement tests in the application', () => {
   describe('POST /client', () => {
     it('should answer with status code 200 and create client', async () => {
       const clientData = clientFactory.insertClientData();
-      const lengthClients = clientsDatabase.length;
 
       const response = await agent.post('/clients').send(clientData);
 
-      expect(response.status).toEqual(200);
-      expect(clientsDatabase).toHaveLength(lengthClients + 1);
+      expect(response.status).toEqual(201);
+      expect(clientsDatabase).toHaveLength(1);
     });
 
-    it('should answer with status code 409 and create one client', async () => {
+    it('should answer with status code 409 and create a client', async () => {
       const clientData = clientFactory.insertClientData();
-      const lengthClients = clientsDatabase.length;
 
       await agent.post('/clients').send(clientData);
       const response = await agent.post('/clients').send(clientData);
 
       expect(response.status).toEqual(409);
-      expect(clientsDatabase).toHaveLength(lengthClients + 1);
+      expect(clientsDatabase).toHaveLength(1);
+    });
+  });
+
+  describe('POST /processes', () => {
+    it('should answer with status code 201 and create process', async () => {
+      const client = clientFactory.createClient();
+      const processData = processesFactory.insertProcessData(client.id);
+
+      const response = await agent.post('/processes').send(processData);
+
+      expect(response.status).toEqual(201);
+      expect(processesDatabase).toHaveLength(1);
+    });
+
+    it('should answer with status code 404 and no create process while client no-exist', async () => {
+      const processData = processesFactory.insertProcessData(1);
+
+      await agent.post('/processes').send(processData);
+      const response = await agent.post('/processes').send(processData);
+
+      expect(response.status).toEqual(404);
+      expect(processesDatabase).toHaveLength(0);
     });
   });
 });
