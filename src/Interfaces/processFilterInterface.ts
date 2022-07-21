@@ -1,7 +1,4 @@
-import Process from './processInterface';
-
 export default interface ProcessesFilter {
-  processes: Array<Process>;
   minValue?: number;
   maxValue?: number;
   minDate?: string;

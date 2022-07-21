@@ -1,4 +1,5 @@
 import processesDatabase from '../Database/processes';
+import ProcessesFilter from '../Interfaces/processFilterInterface';
 import ProcessInsertData from '../Interfaces/processInsertDataInterface';
 import ProcessType from '../Interfaces/processTypeInterface';
 import processRepository from '../repositories/processRepository';
@@ -6,21 +7,17 @@ import applyProcessesFilters from '../utils/applyProcessesFilter';
 import getNewId from '../utils/getNewId';
 import clientService from './clientService';
 
-function sumValues(active: boolean | undefined) {
+function sumValues(filters: ProcessesFilter) {
   let processes = processRepository.findAll();
 
-  if (active !== undefined)
-    processes = applyProcessesFilters({ processes, active });
+  processes = applyProcessesFilters(processes, filters);
 
   return processes.reduce((sum, process) => (sum += process.value), 0);
 }
 
-function averageValues(
-  state: string | undefined,
-  clientName: string | undefined
-) {
+function averageValues(filters: ProcessesFilter) {
   let processes = processRepository.findAll();
-  processes = applyProcessesFilters({ processes, clientName, state });
+  processes = applyProcessesFilters(processes, filters);
 
   return (
     processes.reduce((sum, process) => (sum += process.value), 0) /
@@ -28,26 +25,10 @@ function averageValues(
   );
 }
 
-function find(
-  minValue?: number,
-  maxValue?: number,
-  minDate?: string,
-  maxDate?: string,
-  state?: string,
-  clientName?: string,
-  number?: string
-) {
+function find(filters?: ProcessesFilter) {
   let processes = processRepository.findAll();
-  processes = applyProcessesFilters({
-    processes,
-    minValue,
-    maxValue,
-    minDate,
-    maxDate,
-    clientName,
-    state,
-    number,
-  });
+  if (filters) processes = applyProcessesFilters(processes, filters);
+
   return processes;
 }
 

@@ -1,17 +1,20 @@
 import ProcessesFilter from '../Interfaces/processFilterInterface';
+import Process from '../Interfaces/processInterface';
 import clientService from '../services/clientService';
 
-export default function applyProcessesFilters({
-  processes,
-  minValue,
-  maxValue,
-  minDate,
-  maxDate,
-  clientName,
-  state,
-  active,
-  number,
-}: ProcessesFilter) {
+export default function applyProcessesFilters(
+  processes: Array<Process>,
+  {
+    minValue,
+    maxValue,
+    minDate,
+    maxDate,
+    clientName,
+    state,
+    active,
+    number,
+  }: ProcessesFilter
+) {
   if (minValue)
     processes = processes.filter((process) => process.value >= minValue);
 

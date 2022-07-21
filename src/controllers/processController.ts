@@ -1,57 +1,59 @@
 import { Request, Response } from 'express';
+import ProcessesFilter from '../Interfaces/processFilterInterface';
 import ProcessInsertData from '../Interfaces/processInsertDataInterface';
 import processService from '../services/processService';
 
 function sumValues(req: Request, res: Response) {
-  const { active } = req.query;
-
-  let activeFilter;
-  if (active === 'true') activeFilter = true;
-  if (active === 'false') activeFilter = false;
-
-  const sum = processService.sumValues(activeFilter);
+  const filters = destructorQuery(req.query);
+  const sum = processService.sumValues(filters);
 
   res.status(200).send({ sum });
 }
 
 function averageValues(req: Request, res: Response) {
-  const { state, clientName } = req.query;
-
-  const average = processService.averageValues(
-    state as string | undefined,
-    clientName as string | undefined
-  );
+  const filters = destructorQuery(req.query);
+  const average = processService.averageValues(filters);
 
   res.status(200).send({ average });
 }
 
 function find(req: Request, res: Response) {
-  const minValue = parseInt(req.query.minValue as string);
-  const maxValue = parseInt(req.query.maxValue as string);
-  const maxDate = req.query.maxDate as string;
-  const minDate = req.query.minDate as string;
-  const state = req.query.state as string;
-  const clientName = req.query.clientName as string;
-  const number = req.query.number as string;
+  const filters = destructorQuery(req.query);
+  const processes = processService.find(filters);
 
-  const processes = processService.find(
+  res.status(200).send(processes);
+}
+
+function create(req: Request, res: Response) {
+  const process: ProcessInsertData = req.body;
+  const processes = processService.create(process);
+
+  res.status(201).send(processes);
+}
+
+function destructorQuery(filters: any): ProcessesFilter {
+  const minValue = parseInt(filters.minValue);
+  const maxValue = parseInt(filters.maxValue);
+  const maxDate = filters.maxDate as string;
+  const minDate = filters.minDate as string;
+  const state = filters.state as string;
+  const clientName = filters.clientName as string;
+  const number = filters.number as string;
+
+  let { active } = filters;
+  if (active === 'true') active = true;
+  if (active === 'false') active = false;
+
+  return {
     minValue,
     maxValue,
     minDate,
     maxDate,
     state,
     clientName,
-    number
-  );
-
-  res.send(processes);
-}
-
-function create(req: Request, res: Response) {
-  const process = req.body as ProcessInsertData;
-  const processes = processService.create(process);
-
-  res.status(201).send(processes);
+    number,
+    active,
+  };
 }
 
 export default {
