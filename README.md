@@ -2,7 +2,7 @@
 
 ## :link: Sobre
 
-Uma APi com sistema de cadastro de processos com vinculo a um cliente/empresa, e pode-se cadastrar as empresas/clientes, os processos podem ser resgatados por uma série de filtros como data de inicio do processo, um intervalo de valor do processo, se esta ativo ou não, por cliente, etc.
+Uma API com sistema de cadastro de processos com vinculo a um cliente/empresa, e pode-se cadastrar as empresas/clientes, os processos podem ser resgatados por uma série de filtros como data de inicio do processo, um intervalo de valor do processo, se esta ativo ou não, por cliente, etc.
 
 ## :hammer: Features
 
