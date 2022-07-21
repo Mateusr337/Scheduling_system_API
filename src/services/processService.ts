@@ -1,6 +1,7 @@
 import processesDatabase from '../Database/processes';
 import ProcessInsertData from '../Interfaces/processInsertDataInterface';
 import ProcessType from '../Interfaces/processTypeInterface';
+import clientRepository from '../repositories/clientRepository';
 import processRepository from '../repositories/processRepository';
 import applyProcessesFilters from '../utils/applyProcessesFilter';
 import getNewId from '../utils/getNewId';
@@ -52,11 +53,15 @@ function find(
 
 function create(process: ProcessInsertData) {
   const newId = getNewId(processesDatabase);
-
+  const client = clientRepository.findByNameOrThrow(process.clientName);
   const number = createNumber(process.type, process.state);
-  delete process.type;
 
-  return processRepository.create({ ...process, id: newId, number });
+  return processRepository.create({
+    ...process,
+    id: newId,
+    number,
+    clientId: client.id,
+  });
 }
 
 function createNumber(type: ProcessType, state: string) {

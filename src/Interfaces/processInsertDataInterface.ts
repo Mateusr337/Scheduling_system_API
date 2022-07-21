@@ -1,4 +1,5 @@
 import Process from './processInterface';
+import ProcessType from './processTypeInterface';
 
 export default interface ProcessInsertData {
   id: number;
@@ -7,5 +8,5 @@ export default interface ProcessInsertData {
   state: string;
   value: number;
   initialDate: string;
-  clientId: number;
+  clientName: string;
 }
