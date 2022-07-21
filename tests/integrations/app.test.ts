@@ -136,10 +136,22 @@ describe('complement tests in the application', () => {
 
       const response = await agent.post('/processes').send(processData);
 
-      console.log(processesDatabase);
-
       expect(response.status).toEqual(201);
       expect(processesDatabase).toHaveLength(1);
+    });
+
+    it(`
+      should answer with status code 201 and create two process
+      test format number while have one process
+    `, async () => {
+      const client = clientFactory.createClient();
+      const processData = processesFactory.insertProcessData(client.id);
+
+      await agent.post('/processes').send(processData);
+      const response = await agent.post('/processes').send(processData);
+
+      expect(response.status).toEqual(201);
+      expect(processesDatabase).toHaveLength(2);
     });
 
     it('should answer with status code 404 and no create process while client no-exist', async () => {
