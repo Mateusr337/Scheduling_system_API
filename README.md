@@ -6,6 +6,18 @@ Uma APi com sistema de cadastro de processos com vinculo a um cliente/empresa, e
 
 ## :hammer: Features
 
+:ballot_box_with_check: `POST /clients` Cadastra clientes e recebe name, CNPJ e state;
+
+:ballot_box_with_check: `GET /clients` Busca clientes;
+
+:ballot_box_with_check: `POST /processes` Cadastra processos e recebe active, type, state, value, initialDate, clientId;
+
+:ballot_box_with_check: `GET /processes` Busca processos e recebe 'query params' na URL para filtrar os processos. 
+
+Query params: minValue, maxValue, minDate, maxDate, maxDate, state, clientName, number;
+
+
+
 ## :woman_technologist: Technologias
 <div>
     <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black" />
