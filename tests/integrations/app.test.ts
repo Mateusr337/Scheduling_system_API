@@ -1,7 +1,8 @@
 import supertest from 'supertest';
 import app from '../../src/app';
-import clients from '../../src/Database/clients';
-import processes from '../../src/Database/processes';
+import clientsDatabase from '../../src/Database/clients';
+import processesDatabase from '../../src/Database/processes';
+import clientFactory from '../factories/clientFactory';
 
 const agent = supertest(app);
 
@@ -41,11 +42,11 @@ describe('test cases', () => {
   });
 
   it("should answer with processes of client 'Empresa A' in same state", async () => {
-    const client = clients.find(
+    const client = clientsDatabase.find(
       (client) => client.name === 'Empresa A'.toLowerCase()
     );
 
-    const processesToValid = processes.filter(
+    const processesToValid = processesDatabase.filter(
       (process) =>
         process.number === '00004CIVELRJ' || process.number === '00001CIVELRJ'
     );
@@ -54,18 +55,16 @@ describe('test cases', () => {
       `/processes?state=${client?.state}&clientName=${client?.name}`
     );
 
-    console.log(response.body);
-
     expect(response.body).toHaveLength(2);
     expect(response.body).toEqual(processesToValid);
   });
 
   it("should answer with processes of client 'Empresa B' in same state", async () => {
-    const client = clients.find(
+    const client = clientsDatabase.find(
       (client) => client.name === 'Empresa B'.toLowerCase()
     );
 
-    const processesToValid = processes.filter(
+    const processesToValid = processesDatabase.filter(
       (process) =>
         process.number === '00008CIVELSP' || process.number === '00009CIVELSP'
     );
@@ -74,15 +73,13 @@ describe('test cases', () => {
       `/processes?state=${client?.state}&clientName=${client?.name}`
     );
 
-    console.log(response.body);
-
     expect(response.body).toHaveLength(2);
     expect(response.body).toEqual(processesToValid);
   });
 
   it('should answer with processes with TRAB in the number', async () => {
     const partialNumber = 'TRAB';
-    const processesToValid = processes.filter((process) =>
+    const processesToValid = processesDatabase.filter((process) =>
       process.number.includes(partialNumber)
     );
 
@@ -90,5 +87,35 @@ describe('test cases', () => {
 
     expect(response.body).toHaveLength(2);
     expect(response.body).toEqual(processesToValid);
+  });
+});
+
+describe('complement tests in the application', () => {
+  beforeEach(() => {
+    clientsDatabase.splice(0);
+    processesDatabase.splice(0);
+  });
+
+  describe('POST /client', () => {
+    it('should answer with status code 200 and create client', async () => {
+      const clientData = clientFactory.insertClientData();
+      const lengthClients = clientsDatabase.length;
+
+      const response = await agent.post('/clients').send(clientData);
+
+      expect(response.status).toEqual(200);
+      expect(clientsDatabase).toHaveLength(lengthClients + 1);
+    });
+
+    it('should answer with status code 409 and create one client', async () => {
+      const clientData = clientFactory.insertClientData();
+      const lengthClients = clientsDatabase.length;
+
+      await agent.post('/clients').send(clientData);
+      const response = await agent.post('/clients').send(clientData);
+
+      expect(response.status).toEqual(409);
+      expect(clientsDatabase).toHaveLength(lengthClients + 1);
+    });
   });
 });
