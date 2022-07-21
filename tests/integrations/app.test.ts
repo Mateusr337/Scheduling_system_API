@@ -118,12 +118,25 @@ describe('complement tests in the application', () => {
     });
   });
 
+  describe('GET /clients', () => {
+    it('should answer with status code 200 and clients', async () => {
+      clientFactory.createClient();
+
+      const response = await agent.get('/clients');
+
+      expect(response.status).toEqual(200);
+      expect(response.body).toHaveLength(1);
+    });
+  });
+
   describe('POST /processes', () => {
     it('should answer with status code 201 and create process', async () => {
       const client = clientFactory.createClient();
       const processData = processesFactory.insertProcessData(client.id);
 
       const response = await agent.post('/processes').send(processData);
+
+      console.log(processesDatabase);
 
       expect(response.status).toEqual(201);
       expect(processesDatabase).toHaveLength(1);
