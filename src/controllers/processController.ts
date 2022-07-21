@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Process from '../Interfaces/processInterface';
+import ProcessInsertData from '../Interfaces/processInsertDataInterface';
 import processService from '../services/processService';
 
 function sumValues(req: Request, res: Response) {
@@ -48,7 +48,7 @@ function find(req: Request, res: Response) {
 }
 
 function create(req: Request, res: Response) {
-  const process = req.body as Process;
+  const process = req.body as ProcessInsertData;
   const processes = processService.create(process);
   res.send(processes);
 }

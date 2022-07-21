@@ -2,10 +2,7 @@ import joi from 'joi';
 
 const processSchema = joi.object({
   active: joi.boolean().required(),
-  number: joi
-    .string()
-    .required()
-    .pattern(/^[0-9]{5}[a-z, A-Z]{7}$/),
+  type: joi.string().required().valid('TRAB', 'CIVEL'),
   state: joi
     .string()
     .required()
@@ -14,7 +11,7 @@ const processSchema = joi.object({
   initialDate: joi
     .string()
     .required()
-    .pattern(/^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$/),
+    .pattern(/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/),
   clientId: joi.number().integer().required(),
 });
 
