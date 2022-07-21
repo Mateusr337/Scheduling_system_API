@@ -12,11 +12,13 @@ Uma APi com sistema de cadastro de processos com vinculo a um cliente/empresa, e
 
 :ballot_box_with_check: `POST /processes` Cadastra processos e recebe active, type, state, value, initialDate, clientId;
 
-:ballot_box_with_check: `GET /processes` Busca processos e recebe 'query params' na URL para filtrar os processos. 
+:ballot_box_with_check: `GET /processes` Busca processos e recebe filtros ('query params' listados abaixo) na URL; 
 
-Query params: minValue, maxValue, minDate, maxDate, maxDate, state, clientName, number;
+:ballot_box_with_check: `GET /processes/sum` Retorna soma dos valores dos processos, recebe filtros ('query params' listados abaixo) na URL;
 
+:ballot_box_with_check: `GET /processes/average` Retorna média dos valores dos processos, recebe filtros ('query params' listados abaixo) na URL;
 
+Query params na rota de processos: minValue, maxValue, minDate, maxDate, maxDate, state, clientName, number, active.
 
 ## :woman_technologist: Technologias
 <div>
