@@ -1,1 +1,3 @@
 coverage
+# Local Netlify folder
+.netlify
